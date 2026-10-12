@@ -1,0 +1,404 @@
+/* ==========================================================================
+   styles/main.css
+   أنماط تطبيق أسعار المعادن والعملات.
+   تدعم عدة ثيمات (لون النافذة) عبر فئات على <body>:
+   theme-light / theme-dark / theme-blue / theme-high-contrast
+   ========================================================================== */
+
+/* ---------- الثيم الافتراضي (فاتح) ---------- */
+:root {
+  --bg: #f4f6fb;
+  --surface: #ffffff;
+  --surface-2: #eef2fb;
+  --text: #1a1c22;
+  --muted: #555b6e;
+  --border: #d5dae6;
+  --primary: #0b57d0;
+  --primary-text: #ffffff;
+  --accent-gold: #b8860b;
+  --accent-silver: #6b7280;
+  --focus: #ff8c00;
+  --danger: #b3261e;
+  --radius: 12px;
+  --gap: 20px;
+  --target: 48px;
+  font-size: 18px;
+}
+
+/* ---------- الثيم الداكن ---------- */
+body.theme-dark {
+  --bg: #12151c;
+  --surface: #1c2029;
+  --surface-2: #232834;
+  --text: #eef1f7;
+  --muted: #aeb6c7;
+  --border: #3a4356;
+  --primary: #6ea8ff;
+  --primary-text: #0b1220;
+  --accent-gold: #ffce54;
+  --accent-silver: #c3cad6;
+  --focus: #ffd257;
+  --danger: #ff8a80;
+}
+
+/* ---------- الثيم الأزرق الداكن ---------- */
+body.theme-blue {
+  --bg: #0b1f3a;
+  --surface: #102a4c;
+  --surface-2: #163760;
+  --text: #eaf2ff;
+  --muted: #a9c2e6;
+  --border: #2c517f;
+  --primary: #7fd0ff;
+  --primary-text: #06131f;
+  --accent-gold: #ffd479;
+  --accent-silver: #c9d8ee;
+  --focus: #ffe066;
+  --danger: #ff9b9b;
+}
+
+/* ---------- ثيم التباين العالي ---------- */
+body.theme-high-contrast {
+  --bg: #000000;
+  --surface: #000000;
+  --surface-2: #101010;
+  --text: #ffffff;
+  --muted: #ffff00;
+  --border: #ffffff;
+  --primary: #ffff00;
+  --primary-text: #000000;
+  --accent-gold: #ffff00;
+  --accent-silver: #00ffff;
+  --focus: #00ff00;
+  --danger: #ff5555;
+}
+
+@media (forced-colors: active) {
+  :root { --border: CanvasText; --text: CanvasText; }
+}
+
+/* ---------- إعادة الضبط والأساسيات ---------- */
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", "Tahoma", "Arial", sans-serif;
+  line-height: 1.6;
+}
+
+body { padding: 0 0 40px; }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -60px;
+  inset-inline-start: 16px;
+  background: var(--primary);
+  color: var(--primary-text);
+  padding: 12px 20px;
+  border-radius: 0 0 var(--radius) var(--radius);
+  z-index: 100;
+  text-decoration: none;
+  font-weight: 700;
+  transition: top 0.15s ease;
+}
+.skip-link:focus { top: 0; }
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---------- الترويسة ---------- */
+.app-header {
+  background: var(--surface);
+  border-bottom: 3px solid var(--border);
+  padding: 24px clamp(16px, 4vw, 48px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app-header h1 { margin: 0; font-size: 1.9rem; letter-spacing: 0.2px; }
+.subtitle { margin: 6px 0 0; color: var(--muted); font-size: 1.05rem; }
+
+.status-bar { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+
+.badge {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: 2px solid var(--border);
+}
+.badge-live { background: var(--primary); color: var(--primary-text); }
+.badge-fallback { background: #fff4d6; color: #7a4f00; border-color: #e0a800; }
+body.theme-dark .badge-fallback,
+body.theme-blue .badge-fallback,
+body.theme-high-contrast .badge-fallback {
+  background: #000; color: #ffff00; border-color: #ffff00;
+}
+
+.updated-at { color: var(--muted); font-size: 0.95rem; }
+
+/* ---------- شريط الأدوات ---------- */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 20px clamp(16px, 4vw, 48px);
+  background: var(--surface);
+  border-bottom: 2px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.btn {
+  min-height: var(--target);
+  padding: 12px 22px;
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--text);
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn:hover { border-color: var(--primary); }
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--primary); color: var(--primary-text); border-color: var(--primary); }
+.btn[aria-pressed="true"] { border-color: var(--primary); box-shadow: inset 0 0 0 2px var(--primary); }
+.kbd-hint { font-weight: 400; opacity: 0.85; font-size: 0.85rem; }
+
+/* ---------- المحتوى الرئيسي ---------- */
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: var(--gap) clamp(16px, 4vw, 48px);
+}
+
+/* ---------- شريط التبويبات ---------- */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  border-bottom: 3px solid var(--border);
+  margin-bottom: 22px;
+}
+
+.tab {
+  min-height: var(--target);
+  padding: 14px 26px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 3px solid var(--border);
+  border-bottom: none;
+  border-radius: var(--radius) var(--radius) 0 0;
+  cursor: pointer;
+  position: relative;
+  top: 3px;
+}
+.tab:hover { border-color: var(--primary); }
+.tab[aria-selected="true"] { background: var(--surface); border-color: var(--primary); color: var(--primary); }
+.tab[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: -3px;
+  height: 3px;
+  background: var(--surface);
+}
+
+/* ---------- لوحات التبويبات ---------- */
+.tabpanel {
+  background: var(--surface);
+  border: 3px solid var(--border);
+  border-radius: var(--radius);
+  padding: 26px;
+}
+.tabpanel[hidden] { display: none; }
+
+.panel-title {
+  margin: 0 0 20px;
+  font-size: 1.5rem;
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 12px;
+}
+
+/* ---------- صف التحكم ---------- */
+.control-row { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-bottom: 22px; }
+.control-row label { font-weight: 700; font-size: 1.1rem; min-width: 150px; }
+
+.select {
+  flex: 1 1 220px;
+  min-height: var(--target);
+  padding: 10px 16px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+/* ---------- بطاقة النتيجة ---------- */
+.result-card {
+  background: var(--surface-2);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+}
+
+.result-label { margin: 0 0 8px; font-size: 1.15rem; color: var(--muted); font-weight: 700; }
+
+.result-price {
+  margin: 0 0 12px;
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: var(--accent-gold);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+/* تمييز لون سعر الفضة بالفضي */
+#panel-silver .result-price { color: var(--accent-silver); }
+
+.currency-values {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px 40px;
+  margin-bottom: 12px;
+}
+.currency-line { margin: 0; font-size: 1.2rem; font-weight: 700; }
+.result-price-inline { color: var(--accent-gold); font-variant-numeric: tabular-nums; font-weight: 800; }
+
+.result-source { margin: 0; color: var(--muted); font-size: 0.98rem; }
+.src-value { font-weight: 700; color: var(--text); }
+
+/* ---------- التذييل ---------- */
+.app-footer {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px clamp(16px, 4vw, 48px);
+  color: var(--muted);
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+/* ---------- النوافذ المنبثقة ---------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 200;
+}
+.overlay[hidden] { display: none; }
+
+.dialog {
+  background: var(--surface);
+  border: 3px solid var(--border);
+  border-radius: var(--radius);
+  padding: 26px;
+  max-width: 560px;
+  width: 100%;
+  max-height: 88vh;
+  overflow: auto;
+}
+.dialog h3 { margin-top: 0; font-size: 1.4rem; }
+.dialog-desc { color: var(--muted); margin-top: 0; }
+
+.settings-group {
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px 20px;
+  margin: 0 0 20px;
+}
+.settings-group legend { font-weight: 700; font-size: 1.1rem; padding: 0 8px; }
+
+.radio-list { display: flex; flex-direction: column; gap: 10px; }
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: var(--target);
+  padding: 10px 14px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+.radio-option:hover { border-color: var(--primary); }
+.radio-option input[type="radio"] { width: 22px; height: 22px; accent-color: var(--primary); cursor: pointer; }
+.radio-option:has(input:checked) { border-color: var(--primary); box-shadow: inset 0 0 0 2px var(--primary); }
+
+.theme-swatch::before {
+  content: "";
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  border: 2px solid var(--border);
+  flex: 0 0 auto;
+  order: -1;
+}
+.theme-swatch-light::before { background: linear-gradient(135deg, #ffffff 50%, #0b57d0 50%); }
+.theme-swatch-dark::before { background: linear-gradient(135deg, #12151c 50%, #6ea8ff 50%); }
+.theme-swatch-blue::before { background: linear-gradient(135deg, #0b1f3a 50%, #7fd0ff 50%); }
+.theme-swatch-high-contrast::before { background: linear-gradient(135deg, #000000 50%, #ffff00 50%); }
+
+.shortcuts-list {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px 18px;
+  margin: 16px 0 22px;
+}
+.shortcuts-list dt { white-space: nowrap; }
+.shortcuts-list dd { margin: 0; }
+
+kbd {
+  display: inline-block;
+  padding: 3px 9px;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+/* ---------- الشاشات الصغيرة ---------- */
+@media (max-width: 620px) {
+  .app-header h1 { font-size: 1.5rem; }
+  .tab { padding: 12px 16px; font-size: 1rem; }
+  .result-price { font-size: 2rem; }
+}

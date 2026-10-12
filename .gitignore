@@ -1,0 +1,16 @@
+# npm packages
+node_modules/
+
+# Electron packaged build output
+dist/
+build/
+
+# Inno Setup installer output
+Output/
+
+# Logs
+*.log
+
+# OS specific
+.DS_Store
+Thumbs.db

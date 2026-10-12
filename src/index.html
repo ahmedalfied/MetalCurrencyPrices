@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:;" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>أسعار المعادن والعملات مقابل الجنيه المصري</title>
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body class="theme-light">
+  <a class="skip-link" href="#main-content">تخطَّ إلى المحتوى الرئيسي</a>
+  <header class="app-header" role="banner">
+    <div class="header-text">
+      <h1>أسعار المعادن والعملات</h1>
+      <p class="subtitle">الذهب والفضة وجنيه الذهب والعملات مقابل الجنيه المصري</p>
+    </div>
+    <div class="status-bar">
+      <span id="source-badge" class="badge badge-live" aria-hidden="true">مصدر السعر: تحديث حي من السوق والبنوك</span>
+      <span id="updated-at" class="updated-at">آخر تحديث: —</span>
+    </div>
+    <div id="sr-status" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
+  </header>
+  <nav class="toolbar" aria-label="شريط الأدوات الرئيسي">
+    <button id="btn-refresh" type="button" class="btn btn-primary" aria-keyshortcuts="Alt+R">تحديث الآن <span class="kbd-hint" aria-hidden="true">(Alt+R)</span></button>
+    <button id="btn-auto" type="button" class="btn" aria-pressed="true" aria-keyshortcuts="Alt+A">التحديث التلقائي: مُفعَّل <span class="kbd-hint" aria-hidden="true">(Alt+A)</span></button>
+    <button id="btn-settings" type="button" class="btn" aria-haspopup="dialog" aria-keyshortcuts="Alt+P">الإعدادات <span class="kbd-hint" aria-hidden="true">(Alt+P)</span></button>
+    <button id="btn-help" type="button" class="btn" aria-haspopup="dialog" aria-keyshortcuts="Alt+K">اختصارات لوحة المفاتيح <span class="kbd-hint" aria-hidden="true">(Alt+K)</span></button>
+  </nav>
+  <main id="main-content" tabindex="-1">
+    <div class="tabs" role="tablist" aria-label="أقسام الأسعار">
+      <button id="tab-gold" class="tab" role="tab" aria-selected="true" aria-controls="panel-gold" tabindex="0" aria-keyshortcuts="Alt+G">الذهب</button>
+      <button id="tab-silver" class="tab" role="tab" aria-selected="false" aria-controls="panel-silver" tabindex="-1" aria-keyshortcuts="Alt+S">الفضة</button>
+      <button id="tab-pound" class="tab" role="tab" aria-selected="false" aria-controls="panel-pound" tabindex="-1" aria-keyshortcuts="Alt+J">جنيه الذهب</button>
+      <button id="tab-currencies" class="tab" role="tab" aria-selected="false" aria-controls="panel-currencies" tabindex="-1" aria-keyshortcuts="Alt+C">العملات</button>
+    </div>
+    <section id="panel-gold" class="tabpanel" role="tabpanel" aria-labelledby="tab-gold" tabindex="0" hidden>
+      <h2 class="panel-title">أسعار الذهب</h2>
+      <div class="control-row">
+        <label for="gold-karat-select">اختر العيار</label>
+        <select id="gold-karat-select" class="select"></select>
+      </div>
+      <div class="result-card">
+        <p class="result-label">سعر الجرام عيار <span id="gold-karat-out">—</span></p>
+        <p class="result-price" id="gold-result-price">جارٍ التحميل…</p>
+        <p class="result-source">المصدر: <span class="src-value">تحديث حي من السوق العالمي (الأونصة بالدولار)</span></p>
+      </div>
+    </section>
+    <section id="panel-silver" class="tabpanel" role="tabpanel" aria-labelledby="tab-silver" tabindex="0" hidden>
+      <h2 class="panel-title">أسعار الفضة</h2>
+      <div class="control-row">
+        <label for="silver-select">اختر درجة النقاء</label>
+        <select id="silver-select" class="select"></select>
+      </div>
+      <div class="result-card">
+        <p class="result-label">سعر الجرام <span id="silver-purity-out">—</span></p>
+        <p class="result-price" id="silver-result-price">جارٍ التحميل…</p>
+        <p class="result-source">المصدر: <span class="src-value">تحديث حي من السوق العالمي (الأونصة بالدولار)</span></p>
+      </div>
+    </section>
+    <section id="panel-pound" class="tabpanel" role="tabpanel" aria-labelledby="tab-pound" tabindex="0" hidden>
+      <h2 class="panel-title">جنيه الذهب (الليرة الذهبية)</h2>
+      <div class="control-row">
+        <label for="pound-denom-select">اختر الفئة</label>
+        <select id="pound-denom-select" class="select"></select>
+      </div>
+      <div class="control-row">
+        <label for="pound-karat-select">اختر العيار</label>
+        <select id="pound-karat-select" class="select"></select>
+      </div>
+      <div class="result-card">
+        <p class="result-label" id="pound-result-label">سعر القطعة</p>
+        <p class="result-price" id="pound-result-price">جارٍ التحميل…</p>
+        <p class="result-source" id="pound-result-meta"></p>
+      </div>
+    </section>
+    <section id="panel-currencies" class="tabpanel" role="tabpanel" aria-labelledby="tab-currencies" tabindex="0" hidden>
+      <h2 class="panel-title">العملات الأجنبية مقابل الجنيه المصري</h2>
+      <div class="control-row">
+        <label for="currency-select">اختر العملة</label>
+        <select id="currency-select" class="select"></select>
+      </div>
+      <div class="result-card">
+        <p class="result-label">سعر <span id="currency-name-out">—</span></p>
+        <div class="currency-values">
+          <p class="currency-line">سعر الشراء: <span class="result-price-inline" id="currency-buy-out">—</span></p>
+          <p class="currency-line">سعر البيع: <span class="result-price-inline" id="currency-sell-out">—</span></p>
+        </div>
+        <p class="result-source">المصدر: <span class="src-value">تحديث حي من أسعار الصرف والبنوك</span></p>
+      </div>
+    </section>
+  </main>
+  <footer class="app-footer" role="contentinfo">
+    <p>تطبيق سطح مكتب مبني بـ Electron — يدعم قارئات الشاشة والتنقل بلوحة المفاتيح بالكامل.</p>
+  </footer>
+  <div id="settings-overlay" class="overlay" hidden>
+    <div id="settings-dialog" class="dialog" role="dialog" aria-modal="true" aria-labelledby="settings-title" aria-describedby="settings-desc">
+      <h3 id="settings-title">الإعدادات</h3>
+      <p id="settings-desc" class="dialog-desc">خصّص مظهر التطبيق. تُطبّق التغييرات فورًا وتُحفظ تلقائيًا.</p>
+      <fieldset class="settings-group">
+        <legend>لون النافذة</legend>
+        <div class="radio-list" id="theme-options" role="radiogroup" aria-label="لون النافذة">
+          <label class="radio-option theme-swatch theme-swatch-light">
+            <input type="radio" name="theme" value="light" />
+            <span>فاتح (افتراضي)</span>
+          </label>
+          <label class="radio-option theme-swatch theme-swatch-dark">
+            <input type="radio" name="theme" value="dark" />
+            <span>داكن</span>
+          </label>
+          <label class="radio-option theme-swatch theme-swatch-blue">
+            <input type="radio" name="theme" value="blue" />
+            <span>أزرق داكن</span>
+          </label>
+          <label class="radio-option theme-swatch theme-swatch-high-contrast">
+            <input type="radio" name="theme" value="high-contrast" />
+            <span>تباين عالٍ (لضعاف البصر)</span>
+          </label>
+        </div>
+      </fieldset>
+      <fieldset class="settings-group">
+        <legend>حجم الخط</legend>
+        <div class="radio-list" id="fontsize-options" role="radiogroup" aria-label="حجم الخط">
+          <label class="radio-option"><input type="radio" name="fontSize" value="small" /><span>صغير</span></label>
+          <label class="radio-option"><input type="radio" name="fontSize" value="medium" /><span>متوسط (افتراضي)</span></label>
+          <label class="radio-option"><input type="radio" name="fontSize" value="large" /><span>كبير</span></label>
+          <label class="radio-option"><input type="radio" name="fontSize" value="xlarge" /><span>كبير جدًا</span></label>
+        </div>
+      </fieldset>
+      <button id="btn-close-settings" type="button" class="btn btn-primary">إغلاق</button>
+    </div>
+  </div>
+  <div id="help-overlay" class="overlay" hidden>
+    <div id="help-dialog" class="dialog" role="dialog" aria-modal="true" aria-labelledby="help-title" aria-describedby="help-desc">
+      <h3 id="help-title">اختصارات لوحة المفاتيح</h3>
+      <p id="help-desc">استخدم الاختصارات التالية للتنقل السريع وسماع الأسعار:</p>
+      <dl class="shortcuts-list">
+        <dt><kbd>Alt</kbd> + <kbd>G</kbd></dt><dd>الانتقال إلى تبويب الذهب</dd>
+        <dt><kbd>Alt</kbd> + <kbd>S</kbd></dt><dd>الانتقال إلى تبويب الفضة</dd>
+        <dt><kbd>Alt</kbd> + <kbd>J</kbd></dt><dd>الانتقال إلى تبويب جنيه الذهب</dd>
+        <dt><kbd>Alt</kbd> + <kbd>C</kbd></dt><dd>الانتقال إلى تبويب العملات</dd>
+        <dt><kbd>Alt</kbd> + <kbd>R</kbd></dt><dd>تحديث الأسعار فورًا</dd>
+        <dt><kbd>Alt</kbd> + <kbd>A</kbd></dt><dd>تبديل التحديث التلقائي</dd>
+        <dt><kbd>Alt</kbd> + <kbd>P</kbd></dt><dd>فتح الإعدادات (اللون وحجم الخط)</dd>
+        <dt><kbd>Alt</kbd> + <kbd>H</kbd></dt><dd>تبديل وضع التباين العالي</dd>
+        <dt><kbd>Alt</kbd> + <kbd>K</kbd></dt><dd>فتح هذه النافذة</dd>
+        <dt><kbd>Esc</kbd></dt><dd>إغلاق أي نافذة منبثقة</dd>
+      </dl>
+      <button id="btn-close-help" type="button" class="btn btn-primary">إغلاق</button>
+    </div>
+  </div>
+  <script src="renderer/renderer.js"></script>
+</body>
+</html>
